@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ub-mobile",
+    "name": "Urban Boomerang",
     "slug": "ub-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,17 +13,23 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "app.urbanboomerang.mobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
+      "package": "app.urbanboomerang.mobile"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "bundler": "metro"
+    },
+    "scheme": "urbanboomerang",
+    "extra": {
+      "eas": {
+        "projectId": "a9b17f94-fa32-47b8-a3ae-95a6eb0954f5"
+      }
+    },
+    "owner": "tjones69"
   }
 }
