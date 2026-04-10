@@ -65,7 +65,7 @@ export default function App() {
     global._logoutCallback = () => {
       setIsLoggedIn(false)
     }
-    return () => { global._logoutCallback = null }
+    // Keep callback alive
   }, [])
 
   useEffect(() => {
