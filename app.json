@@ -15,7 +15,8 @@
     "ios": {
       "bundleIdentifier": "app.urbanboomerang.mobile",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "Urban Boomerang uses your location to find partner retailers near you."
       }
     },
     "android": {
