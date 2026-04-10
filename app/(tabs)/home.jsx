@@ -15,7 +15,7 @@ export default function HomeScreen() {
     if (!global.authToken) { ; return }
     const [u, r, i] = await Promise.all([
       apiFetch('/users/me'),
-      apiFetch('/retailers'),
+      apiFetch('/retailers/nearby?lat=32.9&lng=-96.8&radius=5000'),
       apiFetch('/initiatives'),
     ])
     if (u?.data) { setUser(u.data); global.currentUser = u.data }
