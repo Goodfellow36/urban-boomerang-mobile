@@ -26,9 +26,10 @@ export default function ProfileScreen() {
         await AsyncStorage.removeItem('currentUser')
         global.authToken = null
         global.currentUser = null
-        if (global._logoutCallback) {
-          global._logoutCallback()
-        }
+        global.authToken = null
+        // Force app restart by reloading
+        const { Updates } = require('expo-updates')
+        try { await Updates.reloadAsync() } catch(e) { console.log('reload', e) }
       }},
     ])
   }
