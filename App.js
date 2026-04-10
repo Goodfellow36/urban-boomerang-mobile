@@ -58,16 +58,23 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    AsyncStorage.getItem('authToken').then(token => {
-      if (token) {
-        global.authToken = token
-        setIsLoggedIn(true)
+    async function restoreSession() {
+      try {
+        const token = await AsyncStorage.getItem('authToken')
+        const user = await AsyncStorage.getItem('currentUser')
+        if (token) {
+          global.authToken = token
+          setIsLoggedIn(true)
+        }
+        if (user) {
+          global.currentUser = JSON.parse(user)
+        }
+      } catch(e) {
+        console.log('Session restore error:', e.message)
       }
-      AsyncStorage.getItem('currentUser').then(user => {
-        if (user) global.currentUser = JSON.parse(user)
-        setLoading(false)
-      })
-    })
+      setLoading(false)
+    }
+    restoreSession()
   }, [])
 
   if (loading) {
