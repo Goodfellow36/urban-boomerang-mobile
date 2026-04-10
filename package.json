@@ -26,7 +26,8 @@
     "react-native-gesture-handler": "^2.30.1",
     "react-native-safe-area-context": "^5.7.0",
     "react-native-screens": "~3.34.0",
-    "scheduler": "^0.27.0"
+    "scheduler": "^0.27.0",
+    "expo-location": "~19.0.8"
   },
   "private": true
 }
