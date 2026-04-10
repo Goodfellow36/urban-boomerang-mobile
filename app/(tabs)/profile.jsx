@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } from 'react-native'
-import { useNavigation, CommonActions } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { C, formatMoney } from '../../src/constants/theme'
@@ -26,7 +26,9 @@ export default function ProfileScreen() {
         await AsyncStorage.removeItem('currentUser')
         global.authToken = null
         global.currentUser = null
-        router.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Welcome' }] }))
+        if (global._logoutCallback) {
+          global._logoutCallback()
+        }
       }},
     ])
   }

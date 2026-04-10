@@ -53,9 +53,20 @@ function TabNavigator() {
   )
 }
 
+export const logoutUser = () => {
+  if (global._logoutCallback) global._logoutCallback()
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  useEffect(() => {
+    global._logoutCallback = () => {
+      setIsLoggedIn(false)
+    }
+    return () => { global._logoutCallback = null }
+  }, [])
 
   useEffect(() => {
     async function restoreSession() {
