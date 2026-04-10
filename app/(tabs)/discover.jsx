@@ -12,7 +12,7 @@ export default function DiscoverScreen() {
   const [cat, setCat] = useState('All')
 
   useEffect(() => {
-    apiFetch('/retailers/nearby?lat=32.9&lng=-96.8&radius=5000').then(d => {
+    apiFetch('/retailers/nearby?lat=33.158&lng=-96.822&radius=50').then(d => {
       if (d?.data) setRetailers(d.data)
       setLoading(false)
     })
