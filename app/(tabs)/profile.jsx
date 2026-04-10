@@ -26,8 +26,8 @@ export default function ProfileScreen() {
         await AsyncStorage.removeItem('currentUser')
         global.authToken = null
         global.currentUser = null
-        if (global._logoutCallback) {
-          global._logoutCallback()
+        if (global._logout) {
+          global._logout()
         }
       }},
     ])
