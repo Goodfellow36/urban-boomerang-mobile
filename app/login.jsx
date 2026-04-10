@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { C, API } from '../src/constants/theme'
 
 export default function LoginScreen() {
-  const router = useRouter()
+  const router = useNavigation()
   const [phone, setPhone] = useState('')
   const [otp, setOtp] = useState('')
   const [step, setStep] = useState('phone')
@@ -42,7 +42,7 @@ export default function LoginScreen() {
         global.currentUser = data.data.user
         await AsyncStorage.setItem('authToken', data.data.accessToken)
         await AsyncStorage.setItem('currentUser', JSON.stringify(data.data.user))
-        router.replace('/(tabs)/home')
+        router.reset({ index: 0, routes: [{ name: 'Main' }] })
       } else Alert.alert('Error', data.error || 'Invalid code')
     } catch (e) { Alert.alert('Error', e.message) }
     setLoading(false)
@@ -50,7 +50,7 @@ export default function LoginScreen() {
 
   return (
     <View style={s.container}>
-      <TouchableOpacity style={s.back} onPress={() => router.back()}>
+      <TouchableOpacity style={s.back} onPress={() => router.goBack()}>
         <Text style={s.backText}>← Back</Text>
       </TouchableOpacity>
       <Text style={s.title}>{step === 'phone' ? 'Welcome\nback.' : 'Check your\nphone.'}</Text>

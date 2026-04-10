@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useNavigation } from '@react-navigation/native'
 import { C } from '../src/constants/theme'
 
 export default function WelcomeScreen() {
-  const router = useRouter()
+  const router = useNavigation()
   return (
     <ScrollView style={{ flex: 1, backgroundColor: C.ink }} contentContainerStyle={s.content}>
       <View style={s.logoRow}>
@@ -19,10 +19,10 @@ export default function WelcomeScreen() {
         <View style={s.divider} />
         <View style={s.stat}><Text style={[s.statNum, { color: C.gold }]}>7</Text><Text style={s.statLabel}>Initiatives</Text></View>
       </View>
-      <TouchableOpacity style={s.btnGold} onPress={() => router.push('/register')}>
+      <TouchableOpacity style={s.btnGold} onPress={() => router.navigate('Register')}>
         <Text style={s.btnGoldText}>Join the Movement →</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={s.btnGhost} onPress={() => router.push('/login')}>
+      <TouchableOpacity style={s.btnGhost} onPress={() => router.navigate('Login')}>
         <Text style={s.btnGhostText}>I already have an account</Text>
       </TouchableOpacity>
       <Text style={s.tagline}>✊🏾 Conscious spending. Real impact.</Text>

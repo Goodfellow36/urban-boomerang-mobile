@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { C, API } from '../src/constants/theme'
 
@@ -12,7 +12,7 @@ const FIELDS = [
 ]
 
 export default function RegisterScreen() {
-  const router = useRouter()
+  const router = useNavigation()
   const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', city: '', zipCode: '' })
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +28,7 @@ export default function RegisterScreen() {
       const data = await res.json()
       if (res.ok) {
         Alert.alert('Welcome to Urban Boomerang! 🔄', 'Your account is created. Sign in to get started.')
-        router.replace('/login')
+        router.navigate('Login')
       } else Alert.alert('Error', data.error || 'Registration failed')
     } catch (e) { Alert.alert('Error', 'Could not connect to server') }
     setLoading(false)
@@ -36,7 +36,7 @@ export default function RegisterScreen() {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: C.ink }} contentContainerStyle={s.content}>
-      <TouchableOpacity style={s.back} onPress={() => router.back()}>
+      <TouchableOpacity style={s.back} onPress={() => router.goBack()}>
         <Text style={s.backText}>← Back</Text>
       </TouchableOpacity>
       <Text style={s.title}>Join the{'\n'}<Text style={{ color: C.gold }}>movement.</Text></Text>
@@ -57,7 +57,7 @@ export default function RegisterScreen() {
       <TouchableOpacity style={s.btn} onPress={handleRegister} disabled={loading}>
         <Text style={s.btnText}>{loading ? 'Creating account...' : 'Create Account →'}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/login')}>
+      <TouchableOpacity onPress={() => router.navigate('Login')}>
         <Text style={s.link}>Already have an account? Sign in</Text>
       </TouchableOpacity>
     </ScrollView>

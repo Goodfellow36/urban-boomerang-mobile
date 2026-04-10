@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, Switch } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { C, formatMoney } from '../../src/constants/theme'
@@ -13,7 +13,7 @@ const DEI = [
 ]
 
 export default function ProfileScreen() {
-  const router = useRouter()
+  const router = useNavigation()
   const user = global.currentUser
   const [notifs, setNotifs] = useState(true)
   const lifetime = parseFloat(user?.lifetimeBoomeranged || 0)
@@ -26,7 +26,7 @@ export default function ProfileScreen() {
         await AsyncStorage.removeItem('currentUser')
         global.authToken = null
         global.currentUser = null
-        router.replace('/welcome')
+        router.reset({ index: 0, routes: [{ name: 'Welcome' }] })
       }},
     ])
   }

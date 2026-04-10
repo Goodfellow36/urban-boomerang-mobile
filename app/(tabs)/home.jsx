@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator, Alert } from 'react-native'
-import { useRouter } from 'expo-router'
+
 import { useState, useEffect, useCallback } from 'react'
 import { C, apiFetch, formatMoney, pct } from '../../src/constants/theme'
 
 export default function HomeScreen() {
-  const router = useRouter()
+  
   const [user, setUser] = useState(global.currentUser || null)
   const [retailers, setRetailers] = useState([])
   const [initiatives, setInitiatives] = useState([])
@@ -12,7 +12,7 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false)
 
   const load = useCallback(async () => {
-    if (!global.authToken) { router.replace('/welcome'); return }
+    if (!global.authToken) { ; return }
     const [u, r, i] = await Promise.all([
       apiFetch('/users/me'),
       apiFetch('/retailers'),
