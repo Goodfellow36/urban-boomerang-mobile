@@ -41,7 +41,7 @@ export default function HomeScreen() {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load() }} tintColor={C.gold} />}>
 
       <Text style={s.eyebrow}>Good afternoon</Text>
-      <Text style={s.title}>{user?.firstName || 'Welcome'} 👋</Text>
+      <Text style={s.title}>{user?.first_name || user?.firstName || 'Welcome'} 👋</Text>
 
       <View style={s.heroCard}>
         <Text style={s.heroLabel}>Lifetime Boomeranged</Text>
