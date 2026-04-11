@@ -2,10 +2,12 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'reac
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useAuth } from '../src/constants/AuthContext'
 import { C, API } from '../src/constants/theme'
 
 export default function LoginScreen() {
   const router = useNavigation()
+  const { login } = useAuth()
   const [phone, setPhone] = useState('')
   const [otp, setOtp] = useState('')
   const [step, setStep] = useState('phone')
@@ -38,11 +40,9 @@ export default function LoginScreen() {
       })
       const data = await res.json()
       if (res.ok && data.data?.accessToken) {
-        global.authToken = data.data.accessToken
-        global.currentUser = data.data.user
         await AsyncStorage.setItem('authToken', data.data.accessToken)
         await AsyncStorage.setItem('currentUser', JSON.stringify(data.data.user))
-        router.reset({ index: 0, routes: [{ name: 'Main' }] })
+        login(data.data.accessToken, data.data.user)
       } else Alert.alert('Error', data.error || 'Invalid code')
     } catch (e) { Alert.alert('Error', e.message) }
     setLoading(false)

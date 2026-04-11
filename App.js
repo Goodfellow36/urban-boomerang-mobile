@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { View, Text, ActivityIndicator } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import { AuthProvider, useAuth } from './src/constants/AuthContext'
 
 import WelcomeScreen from './app/welcome'
 import LoginScreen from './app/login'
@@ -21,7 +22,6 @@ const C = {
   gold: '#C9A84C',
   ink: '#05080D',
   ink2: '#080C13',
-  cream: '#F0EAD8',
   cream35: 'rgba(240,234,216,0.35)',
   border: 'rgba(255,255,255,0.06)',
 }
@@ -53,40 +53,8 @@ function TabNavigator() {
   )
 }
 
-export const logoutUser = () => {
-  if (global._logoutCallback) global._logoutCallback()
-}
-
-export default function App() {
-  const [loading, setLoading] = useState(true)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  
-  useEffect(() => {
-    global._logoutCallback = () => {
-      setIsLoggedIn(false)
-    }
-    // Keep callback alive
-  }, [])
-
-  useEffect(() => {
-    async function restoreSession() {
-      try {
-        const token = await AsyncStorage.getItem('authToken')
-        const user = await AsyncStorage.getItem('currentUser')
-        if (token) {
-          global.authToken = token
-          setIsLoggedIn(true)
-        }
-        if (user) {
-          global.currentUser = JSON.parse(user)
-        }
-      } catch(e) {
-        console.log('Session restore error:', e.message)
-      }
-      setLoading(false)
-    }
-    restoreSession()
-  }, [])
+function AppNavigator() {
+  const { isLoggedIn, loading } = useAuth()
 
   if (loading) {
     return (
@@ -106,10 +74,17 @@ export default function App() {
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Main" component={TabNavigator} />
           </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
+  )
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppNavigator />
+    </AuthProvider>
   )
 }
