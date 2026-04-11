@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, A
 
 import { useState, useEffect, useCallback } from 'react'
 import { C, apiFetch, formatMoney, pct } from '../../src/constants/theme'
+import PlaidLinkButton from '../../src/components/PlaidLink'
 
 export default function HomeScreen() {
   
@@ -47,9 +48,7 @@ export default function HomeScreen() {
         <Text style={s.heroLabel}>Lifetime Boomeranged</Text>
         <Text style={s.heroAmount}>{formatMoney(lifetime)}</Text>
         <Text style={s.heroSub}>{lifetime === 0 ? 'Link your card to start boomeranging' : 'sent back to your community 🔄'}</Text>
-        <TouchableOpacity style={s.linkBtn} onPress={() => Alert.alert('Link Card', 'Card linking coming in the next update. Your account is ready!')}>
-          <Text style={s.linkBtnText}>💳  Link Your Card →</Text>
-        </TouchableOpacity>
+        <PlaidLinkButton onSuccess={() => load()} />
         {user?.referralCode && (
           <View style={s.referralPill}>
             <Text style={s.referralText}>Your code: {user.referralCode}</Text>
