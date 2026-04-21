@@ -58,6 +58,7 @@ export default function LoginScreen() {
       {step === 'phone' ? (
         <>
           <TextInput style={s.input} placeholder="5107734565" placeholderTextColor={C.cream35} keyboardType="phone-pad" value={phone} onChangeText={setPhone} autoFocus />
+          <Text style={s.smsConsent}>By tapping Send Code, you agree to receive a one-time verification SMS from Urban Boomerang. Msg & data rates may apply. Reply STOP to opt out.</Text>
           <TouchableOpacity style={s.btn} onPress={sendOtp} disabled={loading}>
             <Text style={s.btnText}>{loading ? 'Sending...' : 'Send Code →'}</Text>
           </TouchableOpacity>
@@ -87,4 +88,5 @@ const s = StyleSheet.create({
   btn: { width: '100%', padding: 17, borderRadius: 16, backgroundColor: C.gold, alignItems: 'center', marginBottom: 16 },
   btnText: { fontSize: 16, fontWeight: '800', color: C.ink },
   link: { fontSize: 14, color: C.cream35, textAlign: 'center', marginTop: 8 },
+  smsConsent: { fontSize: 11, color: C.cream35, lineHeight: 16, marginBottom: 12, textAlign: 'center' },
 })
