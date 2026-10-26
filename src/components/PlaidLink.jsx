@@ -39,8 +39,40 @@ export default function PlaidLinkButton({ onSuccess }) {
             })
             const exchangeData = await exchangeRes.json()
             if (exchangeData?.data) {
-              Alert.alert('Success', 'Your card has been linked! You\'re ready to start boomeranging.')
+              Alert.alert('Success', 'Your card has been linked! You are ready to start boomeranging.')
               if (onSuccess) onSuccess()
             } else {
               Alert.alert('Error', 'Card linking failed. Please try again.')
-head -5 src/components/PlaidLink.jsx
+            }
+          } catch (e) {
+            Alert.alert('Error', 'Could not complete card linking')
+          }
+          setLoading(false)
+        },
+        onExit: (exit) => {
+          if (exit.error) {
+            Alert.alert('Error', exit.error.displayMessage || 'Something went wrong')
+          }
+          setLoading(false)
+        },
+      })
+    } catch (e) {
+      Alert.alert('Error', 'Could not connect to server')
+      setLoading(false)
+    }
+  }, [])
+
+  return (
+    <TouchableOpacity style={s.btn} onPress={linkCard} disabled={loading}>
+      {loading
+        ? <ActivityIndicator color={C.ink} />
+        : <Text style={s.btnText}>💳  Link Your Card →</Text>
+      }
+    </TouchableOpacity>
+  )
+}
+
+const s = StyleSheet.create({
+  btn: { backgroundColor: C.gold, borderRadius: 12, paddingVertical: 13, width: '100%', alignItems: 'center' },
+  btnText: { fontSize: 14, fontWeight: '800', color: C.ink },
+})
